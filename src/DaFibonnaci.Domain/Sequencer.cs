@@ -12,6 +12,6 @@ public class Sequencer
     {
         ArgumentOutOfRangeException.ThrowIfNegative(step);
         if (step == 0 || step == 1) return step;
-        return 0;
-    }
+        return Calculate(step - 1) + Calculate(step - 2);
+    } 
 }

@@ -8,18 +8,6 @@ public class SequencerTests
 
     public SequencerTests() => _sut = new Sequencer();
 
-    [Theory]
-    [InlineData(0)]
-    [InlineData(1)]
-    public void Given0Or1WhenCalculateShouldReturnEnterdValue(int step)
-    {      
-        // When
-        var actual = _sut.Calculate(step);
-
-        // Should
-        actual.Should().Be(step);
-    }
-
     [Fact]
     public void GivenNegativeWhenCalculateShouldThrowArgumentOutOfRangeException()
     {
@@ -30,4 +18,30 @@ public class SequencerTests
         action.Should().Throw<ArgumentOutOfRangeException>();
     }
 
+    [Theory]
+    [MemberData(nameof(FibonnaciData))]
+    public void GivenStepWhenCalculateShouldReturnExpected(int step, int expected)
+    {
+        // Given & When
+        var actual = _sut.Calculate(step);
+
+        // Should
+        actual.Should().Be(expected);
+    }
+
+    public static TheoryData<int, int> FibonnaciData() 
+        => new()
+        {
+            { 0, 0 },
+            { 1, 1 },
+            { 2, 1 },
+            { 3, 2 },
+            { 4, 3 },
+            { 5, 5 },
+            { 6, 8 },
+            { 7, 13 },
+            { 8, 21 },
+            { 9, 34 },
+            { 10, 55 }
+        };
 }
